@@ -18,7 +18,7 @@ def fetch_samples(url):
         return None
 
 def main(args):
-    base_url = 'https://www.ebi.ac.uk/metagenomics/api/v1/samples?page_size=100'
+    base_url = f'https://www.ebi.ac.uk/metagenomics/api/v1/samples?page_size={args.pagesize}'
     australian_samples = []
     all_countries = {}
     page_count = 1
@@ -54,6 +54,7 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=' ')
+    parser.add_argument('-p', '--pagesize', help='page size', type=int, default=1000)
     parser.add_argument('-v', help='verbose output', action='store_true')
     args = parser.parse_args()
     main(args)
