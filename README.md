@@ -10,3 +10,6 @@ the documentation can be found
 at [https://www.ebi.ac.uk/metagenomics/api/docs/](https://www.ebi.ac.uk/metagenomics/api/docs/).
 
 
+- [Find samples by country][examples/find_samples_by_country.py]
+
+This code queries the MGNify API for samples downloads the associated metadata. It summarises the counts per country
