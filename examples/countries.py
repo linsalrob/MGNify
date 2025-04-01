@@ -18,7 +18,7 @@ def fetch_samples(url):
         return None
 
 def main(args):
-    base_url = 'https://www.ebi.ac.uk/metagenomics/api/v1/samples'
+    base_url = 'https://www.ebi.ac.uk/metagenomics/api/v1/samples?page_size=100'
     australian_samples = []
     all_countries = {}
     page_count = 1
