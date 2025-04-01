@@ -1,7 +1,7 @@
 """
 Find the samples from MGNify that come from a specific country.
 """
-
+import json
 import os
 import sys
 import argparse
@@ -20,6 +20,7 @@ def fetch_samples(url):
 def main(args):
     base_url = f'https://www.ebi.ac.uk/metagenomics/api/v1/samples?page_size={args.pagesize}'
     australian_samples = []
+    australian_country_samples = []
     all_countries = {}
     page_count = 1
 
@@ -41,14 +42,27 @@ def main(args):
                             all_countries[sm['value']] = 1
                         else:
                             all_countries[sm['value']] += 1
+                        if 'Australia' in sm['value']:
+                            australian_country_samples.append(sample['id'])
             if args.v:
                 print(f"{colours.PINK}Found {len(australian_samples)} samples from Australia so far.{colours.ENDC}", file=sys.stderr)
+                print(f"{colours.YELLOW}Found {len(australian_country_samples)} samples from Australia in the country list.{colours.ENDC}", file=sys.stderr)
                 print(f"{colours.BLUE}Countries: {all_countries}{colours.ENDC}", file=sys.stderr)
             next_page = data['links'].get('next')
         else:
             break
 
     print(f"Australian Sample Accessions: {australian_samples}")
+
+    all_data = {
+        "australian_samples": australian_samples,
+        "australian_samples_sample_metadata": australian_country_samples,
+        "all_countries": all_countries
+    }
+
+    # dump the all_countries data as json
+    with open('country_data.json', 'w') as out:
+        json.dump(all_data, out)
 
 
 
